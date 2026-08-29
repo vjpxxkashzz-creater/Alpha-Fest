@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Alpha Events — Alpha Arts and Science College, Porur</title>
+<meta name="description" content="Alpha Events — the official event discovery and registration platform for Alpha Arts and Science College, Porur.">
+<link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+<!-- ============ CINEMATIC INTRO ============ -->
+<div id="intro" class="intro" aria-hidden="true">
+  <canvas id="introParticles"></canvas>
+  <div class="intro-glow"></div>
+  <div class="intro-content">
+    <img src="assets/logo/college-logo.png" alt="" class="intro-college-logo" onerror="this.style.display='none'">
+    <svg id="introMark" class="intro-mark" viewBox="0 0 120 120" fill="none">
+      <polygon points="60,10 110,105 10,105" stroke="url(#markGrad)" stroke-width="4" stroke-linejoin="round" fill="none"/>
+      <polygon points="60,42 88,95 32,95" fill="url(#markGrad)" opacity="0.9"/>
+      <defs>
+        <linearGradient id="markGrad" x1="10" y1="10" x2="110" y2="105" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#FF3D6E"/>
+          <stop offset="1" stop-color="#6C5CE7"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="intro-line intro-line-1" data-text="ALPHA">ALPHA</div>
+    <div class="intro-line intro-line-2" data-text="ARTS AND SCIENCE COLLEGE · PORUR">ARTS AND SCIENCE COLLEGE &middot; PORUR</div>
+    <div class="intro-line intro-line-3" data-text="ALPHA EVENTS">ALPHA EVENTS</div>
+    <div class="intro-line intro-line-4" data-text="DISCOVER · PARTICIPATE · CREATE MEMORIES">DISCOVER &bull; PARTICIPATE &bull; CREATE MEMORIES</div>
+  </div>
+  <button id="skipIntro" class="skip-intro" type="button">Skip</button>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="app" class="app hidden">
+
+  <!-- Desktop / top nav -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <img src="assets/logo/college-logo.png" alt="Alpha Arts and Science College logo" class="college-logo-img" id="topLogoImg" onerror="this.style.display='none'">
+      <svg class="brand-mark" viewBox="0 0 120 120" fill="none" width="28" height="28">
+        <polygon points="60,10 110,105 10,105" stroke="url(#markGradSmall)" stroke-width="8" stroke-linejoin="round" fill="none"/>
+        <defs><linearGradient id="markGradSmall" x1="10" y1="10" x2="110" y2="105" gradientUnits="userSpaceOnUse"><stop stop-color="#FF3D6E"/><stop offset="1" stop-color="#6C5CE7"/></linearGradient></defs>
+      </svg>
+      <span>ALPHA <b>EVENTS</b></span>
+    </div>
+    <nav class="topbar-nav" aria-label="Primary">
+      <button class="tnav-item" data-view="home">Home</button>
+      <button class="tnav-item" data-view="events">Events</button>
+      <button class="tnav-item" data-view="register">Register</button>
+      <button class="tnav-item" data-view="gallery">Gallery</button>
+      <button class="tnav-item" data-view="dashboard">Dashboard</button>
+      <button class="tnav-item" data-view="contact">Contact</button>
+    </nav>
+    <div class="topbar-actions">
+      <button id="themeToggle" class="icon-btn" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg class="ic-sun" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="4"/><g stroke="currentColor" stroke-width="1.6"><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="4.2" y1="4.2" x2="6" y2="6"/><line x1="18" y1="18" x2="19.8" y2="19.8"/><line x1="1.5" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.5" y2="12"/><line x1="4.2" y1="19.8" x2="6" y2="18"/><line x1="18" y1="6" x2="19.8" y2="4.2"/></g></svg>
+        <svg class="ic-moon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4 6.8 6.8 0 0 0 20 14.5Z"/></svg>
+      </button>
+      <button class="icon-btn" data-view="notifications" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2.5a5.5 5.5 0 0 0-5.5 5.5v3.2c0 .8-.3 1.6-.9 2.2L4 15v1h16v-1l-1.6-1.6a3.1 3.1 0 0 1-.9-2.2V8A5.5 5.5 0 0 0 12 2.5Z"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0"/></svg>
+        <span id="notifDot" class="dot hidden"></span>
+      </button>
+      <button class="icon-btn avatar-btn" data-view="profile" aria-label="Profile">
+        <span id="topAvatar" class="avatar-mini">A</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <main id="view-home" class="view active">
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-scrim"></div>
+      <div class="hero-content">
+        <span class="eyebrow">Alpha Arts and Science College &middot; Porur</span>
+        <h1>ALPHA <span>EVENTS</span></h1>
+        <p>Your Campus. Your Events. Your Memories.</p>
+        <button class="btn btn-primary btn-glow" data-view="events">Explore Events
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Featured Events</h2></div>
+      <div id="featuredRow" class="hscroll"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Browse by Category</h2></div>
+      <div id="categoryRow" class="chip-row"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Upcoming Events</h2></div>
+      <div id="upcomingRow" class="hscroll"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Trending Now</h2></div>
+      <div id="trendingRow" class="hscroll"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Latest Announcements</h2></div>
+      <div id="announceList" class="announce-list"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Memories From Past Events</h2></div>
+      <div id="memoriesRow" class="hscroll hscroll-square"></div>
+    </section>
+
+    <p class="footer-note">
+      Alpha Arts and Science College, Porur &middot;
+      <button class="link-btn" data-view="contact" style="font-size:.72rem;">Contact &amp; Map</button>
+      &middot; This is a frontend demo — data is stored only in your browser.
+    </p>
+  </main>
+
+  <!-- ============ EVENTS ============ -->
+  <main id="view-events" class="view">
+    <div class="page-head">
+      <h1>Discover Events</h1>
+      <p>Every fest, workshop and challenge happening across Alpha.</p>
+    </div>
+    <div class="chip-row" id="eventsCategoryFilter"></div>
+    <div id="eventsGrid" class="events-grid"></div>
+  </main>
+
+  <!-- ============ REGISTER (multi-step) ============ -->
+  <main id="view-register" class="view">
+    <div class="page-head">
+      <h1>Event Registration</h1>
+      <p>Complete every step to secure your spot.</p>
+    </div>
+
+    <div class="stepper" id="stepper">
+      <div class="step active" data-step="1"><span>1</span>Personal</div>
+      <div class="step" data-step="2"><span>2</span>Academic</div>
+      <div class="step" data-step="3"><span>3</span>Event</div>
+      <div class="step" data-step="4"><span>4</span>Additional</div>
+      <div class="step" data-step="5"><span>5</span>Emergency</div>
+      <div class="step" data-step="6"><span>6</span>Confirm</div>
+    </div>
+
+    <form id="regForm" class="reg-form" novalidate>
+
+      <fieldset class="form-panel active" data-panel="1">
+        <legend>Personal Information</legend>
+        <div class="form-grid">
+          <label>Full Name<input required name="fullName" type="text" placeholder="e.g. Priya Ramesh"></label>
+          <label>Date of Birth<input required name="dob" type="date"></label>
+          <label>Gender
+            <select required name="gender"><option value="">Select</option><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select>
+          </label>
+          <label>Email Address<input required name="email" type="email" placeholder="you@example.com"></label>
+          <label>Mobile Number<input required name="mobile" type="tel" placeholder="10-digit number"></label>
+          <label>Alternate Contact Number<input name="altContact" type="tel" placeholder="Optional"></label>
+          <label>Student Register Number<input required name="regNumber" type="text" placeholder="e.g. 23UCS045"></label>
+          <label>Student ID<input required name="studentId" type="text" placeholder="Campus ID card number"></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-panel" data-panel="2">
+        <legend>Academic Information</legend>
+        <div class="form-grid">
+          <label>College Name<input required name="college" type="text" value="Alpha Arts and Science College, Porur"></label>
+          <label>Department
+            <select required name="department"><option value="">Select</option><option>Computer Science</option><option>Commerce</option><option>Business Administration</option><option>English Literature</option><option>Mathematics</option><option>Visual Communication</option><option>Physics</option><option>Biotechnology</option></select>
+          </label>
+          <label>Degree / Programme<input required name="degree" type="text" placeholder="e.g. B.Sc, B.Com"></label>
+          <label>Year
+            <select required name="year"><option value="">Select</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option></select>
+          </label>
+          <label>Semester
+            <select required name="semester"><option value="">Select</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+          </label>
+          <label>Section<input name="section" type="text" placeholder="e.g. A"></label>
+          <label>Roll Number<input name="rollNumber" type="text" placeholder="Class roll number"></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-panel" data-panel="3">
+        <legend>Event Information</legend>
+        <div class="form-grid">
+          <label>Select Event
+            <select required name="eventId" id="regEventSelect"><option value="">Select an event</option></select>
+          </label>
+          <label>Event Category<input name="category" type="text" readonly placeholder="Auto-filled"></label>
+          <label>Participation Type
+            <select required name="participationType" id="regParticipationType"><option value="">Select</option><option>Individual</option><option>Team</option></select>
+          </label>
+          <label id="teamNameWrap" class="hidden">Team Name<input name="teamName" type="text" placeholder="Your squad's name"></label>
+          <label id="teamMembersWrap" class="hidden">Team Members<input name="teamMembers" type="text" placeholder="Comma-separated names"></label>
+          <label>Preferred Session
+            <select name="session"><option value="">No preference</option><option>Forenoon</option><option>Afternoon</option></select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-panel" data-panel="4">
+        <legend>Additional Information</legend>
+        <div class="form-grid">
+          <label>Skills<input name="skills" type="text" placeholder="e.g. Public speaking, Python"></label>
+          <label>Interests<input name="interests" type="text" placeholder="e.g. Design, Robotics"></label>
+          <label>Previous Event Participation<input name="prevParticipation" type="text" placeholder="Events you've joined before"></label>
+          <label>Experience Level
+            <select name="experience"><option value="">Select</option><option>First-timer</option><option>Some experience</option><option>Experienced</option></select>
+          </label>
+          <label class="full">Special Requirements<textarea name="specialReq" rows="2" placeholder="Accessibility needs, dietary needs, etc."></textarea></label>
+          <label class="full">Additional Notes<textarea name="notes" rows="2" placeholder="Anything else the organizers should know"></textarea></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-panel" data-panel="5">
+        <legend>Emergency Contact</legend>
+        <div class="form-grid">
+          <label>Emergency Contact Name<input required name="emergencyName" type="text"></label>
+          <label>Relationship<input required name="emergencyRelation" type="text" placeholder="e.g. Parent, Sibling"></label>
+          <label>Emergency Contact Number<input required name="emergencyContact" type="tel"></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-panel" data-panel="6">
+        <legend>Review &amp; Confirm</legend>
+        <div id="regSummary" class="reg-summary"></div>
+        <label class="confirm-check">
+          <input required type="checkbox" name="confirm" id="confirmCheck">
+          I confirm that the information provided is correct.
+        </label>
+      </fieldset>
+
+      <div class="form-actions">
+        <button type="button" id="prevStepBtn" class="btn btn-ghost">Back</button>
+        <button type="button" id="nextStepBtn" class="btn btn-primary">Next</button>
+        <button type="submit" id="submitRegBtn" class="btn btn-primary btn-glow hidden">Confirm Registration</button>
+      </div>
+    </form>
+  </main>
+
+  <!-- ============ REGISTRATION SUCCESS ============ -->
+  <main id="view-success" class="view">
+    <div class="success-wrap">
+      <svg class="success-check" viewBox="0 0 100 100">
+        <circle class="success-circle" cx="50" cy="50" r="45" fill="none" stroke-width="4"/>
+        <path class="success-tick" fill="none" stroke-width="5" d="M28 52 L44 68 L74 34"/>
+      </svg>
+      <h1>Registration Successful</h1>
+      <p>Your seat is confirmed. See you there!</p>
+      <div id="successCard" class="success-card"></div>
+      <div class="form-actions center">
+        <button class="btn btn-ghost" data-view="profile">View Registration</button>
+        <button class="btn btn-primary" onclick="window.print()">Print Confirmation</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ SIGN IN ============ -->
+  <main id="view-signin" class="view">
+    <div class="auth-wrap">
+      <h1>Student Sign In</h1>
+      <p class="muted">Frontend demo authentication — data is stored only in your browser via localStorage. Do not use a real password.</p>
+      <form id="signinForm" class="auth-form">
+        <label>Email / Register Number<input required name="identifier" type="text"></label>
+        <label>Password<input required name="password" type="password"></label>
+        <button type="submit" class="btn btn-primary btn-glow">Sign In</button>
+      </form>
+      <div class="auth-links">
+        <button class="link-btn" id="showCreateAccount">Create Account</button>
+        <button class="link-btn" id="showForgot">Forgot Password</button>
+      </div>
+
+      <form id="createForm" class="auth-form hidden">
+        <h2>Create Account</h2>
+        <label>Full Name<input required name="name" type="text"></label>
+        <label>Register Number<input required name="regNumber" type="text"></label>
+        <label>Department<input required name="department" type="text"></label>
+        <label>Year
+          <select required name="year"><option value="">Select</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option></select>
+        </label>
+        <label>Email<input required name="email" type="email"></label>
+        <label>Phone<input required name="phone" type="tel"></label>
+        <label>Password<input required name="password" type="password"></label>
+        <button type="submit" class="btn btn-primary btn-glow">Create Account</button>
+        <button type="button" class="link-btn" id="backToSignin">Back to Sign In</button>
+      </form>
+
+      <div id="forgotBox" class="hint-box hidden">
+        This is a static demo — there's no email server behind it. Reset by creating a new account, or contact the Alpha Events team at the address on the Contact page.
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ PROFILE ============ -->
+  <main id="view-profile" class="view">
+    <div id="profileSignedOut" class="auth-wrap">
+      <h1>My Profile</h1>
+      <p class="muted">Sign in to view your registrations, saved events and history.</p>
+      <button class="btn btn-primary btn-glow" data-view="signin">Sign In</button>
+    </div>
+    <div id="profileSignedIn" class="profile-wrap hidden">
+      <div class="profile-header">
+        <div id="profileAvatar" class="avatar-lg">A</div>
+        <div>
+          <h1 id="profileName">—</h1>
+          <p id="profileMeta" class="muted">—</p>
+        </div>
+        <button id="signOutBtn" class="btn btn-ghost">Sign Out</button>
+      </div>
+      <div class="profile-tabs">
+        <button class="ptab active" data-ptab="events">My Registrations</button>
+        <button class="ptab" data-ptab="saved">Saved Events</button>
+        <button class="ptab" data-ptab="history">History</button>
+      </div>
+      <div id="profileRegList" class="reg-card-list"></div>
+      <div id="profileSavedList" class="reg-card-list hidden"></div>
+      <div id="profileHistoryList" class="reg-card-list hidden"></div>
+    </div>
+  </main>
+
+  <!-- ============ NOTIFICATIONS ============ -->
+  <main id="view-notifications" class="view">
+    <div class="page-head row">
+      <div><h1>Notifications</h1><p>Stay in the loop on everything Alpha.</p></div>
+      <button id="markAllReadBtn" class="btn btn-ghost">Mark All As Read</button>
+    </div>
+    <div id="notifList" class="notif-list"></div>
+  </main>
+
+  <!-- ============ GALLERY ============ -->
+  <main id="view-gallery" class="view">
+    <div class="page-head">
+      <h1>Alpha Event Gallery</h1>
+      <p>Moments captured across every fest, match and workshop.</p>
+    </div>
+    <div class="chip-row" id="galleryFilter"></div>
+    <div id="galleryGrid" class="gallery-grid"></div>
+  </main>
+
+  <!-- ============ DASHBOARD ============ -->
+  <main id="view-dashboard" class="view">
+    <div class="page-head">
+      <h1>Registration Dashboard</h1>
+      <p>Live overview of every student and every sign-up.</p>
+    </div>
+
+    <div id="statCards" class="stat-grid"></div>
+
+    <div class="dash-charts">
+      <div class="chart-card">
+        <h3>Department-wise Registrations</h3>
+        <div id="chartDept" class="bar-chart"></div>
+      </div>
+      <div class="chart-card">
+        <h3>Event-wise Registrations</h3>
+        <div id="chartEvent" class="bar-chart"></div>
+      </div>
+    </div>
+
+    <div class="dash-search">
+      <input id="studentSearch" type="search" placeholder="Search students by name, register no, ID, email, phone, dept, year, event...">
+      <div class="dash-filters">
+        <select id="filterDept"><option value="">All Departments</option></select>
+        <select id="filterYear"><option value="">All Years</option></select>
+        <select id="filterEvent"><option value="">All Events</option></select>
+        <select id="filterCategory"><option value="">All Categories</option></select>
+        <select id="filterStatus"><option value="">All Status</option><option>Confirmed</option></select>
+        <select id="sortBy">
+          <option value="date">Sort: Date</option>
+          <option value="name">Sort: Name</option>
+          <option value="event">Sort: Event</option>
+          <option value="department">Sort: Department</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table id="studentTable" class="student-table">
+        <thead><tr>
+          <th>Student</th><th>Register No.</th><th>Department</th><th>Year</th><th>Event</th><th>Category</th><th>Reg. ID</th><th>Date</th><th>Status</th><th></th>
+        </tr></thead>
+        <tbody id="studentTableBody"></tbody>
+      </table>
+    </div>
+    <div id="studentCardList" class="student-card-list"></div>
+    <p id="dashEmpty" class="muted center hidden">No students match your search yet.</p>
+  </main>
+
+  <!-- ============ CONTACT ============ -->
+  <main id="view-contact" class="view">
+    <div class="page-head">
+      <h1>Contact Alpha</h1>
+      <p>Reach the Alpha Events team, or find your way to campus.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>Alpha Arts and Science College</h3>
+        <p>No. 30, Tundalam Road, Chettiyar Agaram Road,<br>Behind Ramachandra Hospital, Porur, Chennai, Tamil Nadu 600116</p>
+        <div class="em-block" style="margin-top:14px;">
+          <h4>General Enquiries</h4>
+          <p><a href="tel:+914424762368">+91-44-2476 2368</a> &middot; <a href="tel:+919884442576">+91-98844 42576</a></p>
+          <p><a href="mailto:aasc@alphagroup.edu">aasc@alphagroup.edu</a></p>
+        </div>
+        <div class="em-block">
+          <h4>Admissions</h4>
+          <p><a href="tel:+918929095375">+91-89290 95375</a></p>
+          <p><a href="mailto:admission@alphagroup.edu">admission@alphagroup.edu</a></p>
+        </div>
+        <p class="muted" style="font-size:.74rem;">Website: <a href="https://alphagroup.edu/arts-science/" target="_blank" rel="noopener">alphagroup.edu/arts-science</a></p>
+        <div class="form-actions">
+          <a class="btn btn-primary" id="getDirectionsBtn" href="https://www.google.com/maps/dir/?api=1&destination=Alpha+Arts+and+Science+College%2C+No.30+Tundalam+Road%2C+Chettiyar+Agaram+Road%2C+Porur%2C+Chennai+600116" target="_blank" rel="noopener">Get Directions</a>
+          <a class="btn btn-ghost" id="openMapBtn" href="https://www.google.com/maps/search/?api=1&query=Alpha+Arts+and+Science+College%2C+No.30+Tundalam+Road%2C+Porur%2C+Chennai+600116" target="_blank" rel="noopener">Open Map</a>
+        </div>
+      </div>
+      <div class="map-embed">
+        <iframe title="Alpha Arts and Science College, Porur location" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Alpha+Arts+and+Science+College%2C+No.30+Tundalam+Road%2C+Porur%2C+Chennai+600116&output=embed"></iframe>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ EVENT DETAILS MODAL ============ -->
+  <div id="eventModal" class="modal-overlay hidden">
+    <div class="modal event-modal">
+      <button class="modal-close" data-close>&times;</button>
+      <div id="eventModalBody"></div>
+    </div>
+  </div>
+
+  <!-- ============ STUDENT DETAILS MODAL ============ -->
+  <div id="studentModal" class="modal-overlay hidden">
+    <div class="modal">
+      <button class="modal-close" data-close>&times;</button>
+      <div id="studentModalBody"></div>
+    </div>
+  </div>
+
+  <!-- ============ LIGHTBOX ============ -->
+  <div id="lightbox" class="modal-overlay hidden">
+    <button class="modal-close" data-close>&times;</button>
+    <button id="lbPrev" class="lb-nav lb-prev" aria-label="Previous">&#8249;</button>
+    <div class="lb-content">
+      <img id="lbImage" src="" alt="">
+      <div id="lbMeta" class="lb-meta"></div>
+    </div>
+    <button id="lbNext" class="lb-nav lb-next" aria-label="Next">&#8250;</button>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Bottom nav (mobile) -->
+  <nav class="bottomnav" aria-label="Primary mobile">
+    <button class="bnav-item active" data-view="home">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1Z"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="bnav-item" data-view="events">
+      <svg viewBox="0 0 24 24" width="22" height="22"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+      <span>Events</span>
+    </button>
+    <button class="bnav-item bnav-center" data-view="register">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 5v14M5 12h14" stroke-width="2.4"/></svg>
+      <span>Register</span>
+    </button>
+    <button class="bnav-item" data-view="gallery">
+      <svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m4 17 4.5-5 3.5 3.8L16 12l4 5"/></svg>
+      <span>Gallery</span>
+    </button>
+    <button class="bnav-item" data-view="dashboard">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 20V10M11 20V4M18 20v-7"/></svg>
+      <span>Dashboard</span>
+    </button>
+    <div class="bnav-pill" id="bnavPill"></div>
+  </nav>
+
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
